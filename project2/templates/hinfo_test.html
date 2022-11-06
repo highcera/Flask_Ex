@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+    <title>Lazy Loading</title>
+    <style>
+      body { font-family: Consolas, sans-serif; }
+      h1 { margin: 30px 0px; text-align: center; }
+      img { max-width: 100%; display: block; margin: 0px 0px 500px 0px; }
+    </style>
+  </head>
+  <body>
+    <div class="a">
+      <h1>Lazy Loding</h1>
+    </div>
+    <div class="b">
+      <img src= alt="My Image">
+      <img src="../static/img/1.jpeg" alt="" loading="lazy">
+      <img src="../static/img/2.jpeg" alt="" loading="lazy">
+      <img src="../static/img/3.jpeg" alt="" loading="lazy">
+      <img src="../static/img/4.jpeg" alt="" loading="lazy">
+    </div>
+  </body>
+</html>
