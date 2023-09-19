@@ -3,6 +3,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>등록한 집 세부내용</title>
+<<<<<<< HEAD
 		<link rel="stylesheet" href="/static/css/style.css">
 	</head>
 	<body>
@@ -16,6 +17,26 @@
 				<div>
 					<img src = {{url_for('static', filename = photo)}}>
 				</div></p>
+=======
+		<link rel="stylesheet" href="/css/style.css"/>
+	</head>
+	<body>
+		<article id="5d4c1ebf-007e-41b2-bbef-093154afdef7" class="page sans">
+			<header>
+				<h1 class="page-title">등록한 집 세부내용</h1>
+			</header>
+			<div class="page-body">
+				<p id="cbaed7bb-daf7-4f3f-ad9f-fadad3568a4b" class="">집 위치 - {{location}}</p>
+				<p id="01db38b7-6e25-420c-a50a-34f39b7bc881" class="">청결도 - 
+					{% if cleaness == True %}★★★
+					{% else %}☆
+					{% endif %}</p>
+				<p id="2acec99f-6acf-4d94-8057-ceb86cb9986d" class="">빌트인 항목 - {{built_in}}</p>
+				<p id="2acec99f-6acf-4d94-8057-ceb86cb9986d" class="">
+					<div>
+						<img src = {{url_for('static', filename = photo)}}>
+					</div></p>
+>>>>>>> cba5909e2786d7022a1d3415d0e6e289967557d4
 			</div>
 		</article>
 	</body>

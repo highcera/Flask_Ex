@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<<<<<<< HEAD
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>사진 업로드 하기</title>
 			<link rel="stylesheet" href="/static/css/style.css">
@@ -15,6 +16,23 @@
 						<input type="file" name="file"/>
 						<input type="submit"/>
 				</p>
+=======
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>사진 업로드 하기</title> 
+		<link rel="stylesheet" href="/css/style.css"/>
+	</head>
+	<body>
+		<article id="b5999741-94e7-4154-b04c-5b801429ec68" class="page sans">
+			<header>
+				<h1 class="page-title">사진 업로드 하기</h1>
+			</header>
+			<div class="page-body">
+				<p id="fd54d0ca-0d51-4b7b-bed6-f48a4a579353" class="">사진 업로드하기</p>
+				<p id="e592f17e-f42f-43e0-8762-6a14d3effe99" class="">
+				<form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_done') }}">
+				<input type="file" name="file"/>
+				<input type="submit"/></p>
+>>>>>>> cba5909e2786d7022a1d3415d0e6e289967557d4
 			</div>
 		</article>
 	</body>
