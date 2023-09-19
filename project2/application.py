@@ -30,7 +30,7 @@ def photo_apply():
 def upload_done():
     uploaded_files = request.files["file"]
     # print(database.now_index())
-    uploaded_files.save("C:/stockauto/flask/project2/static/img/{}.jpeg".format(database.now_index()))
+    uploaded_files.save("static\img\{}.jpeg".format(database.now_index()))
     return redirect(url_for("hello"))
     
 @application.route("/list")

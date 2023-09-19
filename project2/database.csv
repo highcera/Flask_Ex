@@ -5,3 +5,5 @@ index,location,cleaness,built_in
 3,권선구,False,의류건조기
 4,용인시 기흥구,True,식탁
 5,화성시 동탄구,True,식탁
+6,권선구 곡반정동,False,에어컨
+7,곡반정동,False,에어컨
