@@ -1,0 +1,3 @@
+■ seaborn
+▶ [파이썬 데이터 분석] 시각화, pyplot과 seaborn 라이브러리 튜토리얼 - 1 https://codingkwon.tistory.com/6
+▶ [파이썬 데이터 분석] 시각화, pyplot과 seaborn 라이브러리 튜토리얼 - 2 https://codingkwon.tistory.com/7

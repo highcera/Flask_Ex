@@ -1,0 +1,122 @@
+https://platform.samsungcic.com/#/home
+
+□ 누구나DO IT! 쉽게 시작하는 AI&프로그래밍
+  codecademy - HTML CSS
+  생활코딩
+
+Javascript
+google F12 console
+
+함수 용법 googling
+javascript alert
+https://www.w3schools.com/js
+
+javascript 필요한 기증
+https:://jQuery.com 
+jqueryui.com
+coodepen.io
+bootstrap
+
+Homepage 
+https://www.free-css.com/free-css-templates
+https://www.netlify.com/ (https://app.netlify.com/teams/highcera/overview)
+freenorm
+
+■ 8차시 CSS기초와 활용: 구글 클론 사이트 만들기
+폴더 생성, PS>open folder
+index.html / style.css 화일 생성
+index.html
+! + TAB en→ko, title 변경, <link rel="stylesheet" href="style.css">, body : <h1>Joogle</h1> <form action=""> <input type="text"> </form>
+
+googling : > 사용언어/?? + 행위 ex) css center
+style.css
+h1 {
+    text-align : center;
+}
+
+htmltag
+
+css child color
+h1 span:nth-child(1) {
+    color : blue;
+}
+
+Bootstrap 사용 검색창 만들기
+https://materializecss.com/buttons.html
+https://react.semantic-ui.com/
+
+codepen
+
+오픈 API 활용
+request (GET / POST) - response (JSON)
+
+
+서버 : netlify
+Free CSS
+
+
+■ 9차시 JavaScript 기초와 활용1: 스타크래프트 만들기
+HTML, CSS - Javascript
+함수 googling - 언어 + 함수 이름 / javascript 필요한 기능
+
+libary 
+https:://jQuery.com Download Jquery CDN 
+jqueryui.com
+codepen
+
+googling : jquery hide show -> w3schools
+
+
+■ 10차시 JavaScript 기초와 활용2: API 개념과 활용, 카카오 책 검색 API 만들기
+https://dapi.kakao.com/v3/search/book
+developers.kakao.com
+
+googling : jquery ajax
+
+
+네이티브 앱 키	d9af8808f541fe177880f799d91ec2ee
+REST API 키	dedc734b4a4a204e98a9106efbb0c6af
+JavaScript 키	2ed11b5d69799b1c1e2d83bc7f32204f
+Admin 키	edeb42c00bcdd347f70a311539552c2d
+
+
+
+11차시 - 프로그래밍&알고리즘 기초: 스크래치로 똥피하기 게임 만들기
+scratch
+
+
+12차시 - 백엔드의 기초와 활용1: 로또 번호 추천 사이트 만들기
+프레임워크 > Ruby on Rails 
+장점 : 가장 짧은 시간/가장 적게 배우고/가장 많은 것을 만들 수 있는 생산성 최고로 높은 프레임워크 중 하나 ( 빠르게 서비스 구축 / 변화 필요 스타트업)
+Airbnb, Github, Twitch, 마이리얼트립, 당근마켓, 미소
+단점 : Ruby - Rails 외 활용처 없음 (구직 난, 커뮤니티 소 → 공통적인 것 중심, 다른언어 및 프레임 워크)
+
+백엔드 프레임워크 구조 (MVC 패턴)
+                                                                             ④ board.html 전송     
+                                   ↙          -----------                  (V)iew
+                                 ① http://jocoding.com/board  ② board에서 해야 할 일 수행 
+Front_End (Client Side) →           Router          →           (C)ontroller                               (M)odel  DB
+                                                                                                                          ③ 게시글 DB정보 가져옴
+                                                                              Back-End (Server Side)
+M (Model : 데이터 담당), V (View : 화면을 담당), C (Controller : 전반적인 관리)                     
+① http://jocoding.com/board 입력 router는 게시판 접근 인지 controller 전달 > controll 게시판이 해야할 일 저장 중, ② board에서 해야 할 일 수행 
+> controller 모델을 통해 DB에서 게시글 정보 가져옴 (③ 게시글 DB정보 가져옴) > 가져온 정보를 view를 통해 HTML, CSS 요소를 첨가 > 화면으로 전달 (④ board.html 전송)  
+
+Goormide 사용 > Rails 선택
+controller 생성 rails g controller 이름 (app>controller>lotto_controller.rb / views>lotto 폴더 생성 확인) 
+views>lotto 폴더> 파일생성 (index.html.erb), <h1> hihi </h1>
+lotto_controller view 이름 함수 추가 def index / end
+router 만들기 : config>routers.rb -> router 규칙 작성 -> get(/post) '/gogo', to: 'lotto#index'
+
+
+https://ide.goorm.io/
+http://guides.rubyonrails.org/routing.html
+                                                                                                
+get '/patients/:id', to: 'patients#show'
+
+googling : ruby array of numbers
+[*1..10]
+
+[기타]
+GitHub 저장소: https://github.com/hyunyulhenry/quant_py
+- Henry's Quantopia: https://blog.naver.com/leebisu

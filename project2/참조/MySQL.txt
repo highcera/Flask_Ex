@@ -1,0 +1,465 @@
+
+
+c:\program files\mysql\mysql server 8.0\bin>mysql -uroot -p
+\h, \q
+
+0x00000000010100000000000000000054C00000000000003EC0
+baseRest = '왕매워 짬뽕 ' + askstring('기준 체인점', '체인점 번호를 입력하세요') + '호점' 
+
+KingHotDB
+
+displayRestaurant()
+sql = "SELECT restName, ST_AsText((ST_Buffer(restLocation, 3))) FROM Restaurant"
+0x00000000010100000000000000000054C00000000000003EC0
+
+displayManager()
+sql = "SELECT ManagerName, ST_AsText(Area) FROM Manager ORDER BY ManagerName"
+
+showResMan()
+ sql = "SELECT M.ManagerName, R.restName, ST_AsText((ST_Buffer(R.restLocation, 3))) FROM Restaurant R, Manager M"
+    sql += " WHERE ST_Contains(M.area, R.restLocation) = 1 ORDER BY R.restName" # 체인점 순으로 정렬
+
+showNearest()
+sql = "SELECT ST_AsText(R2.restLocation), ST_Distance(R1.restLocation, R2.restLocation) "
+    sql += " FROM Restaurant R1, Restaurant R2 "
+    sql += " WHERE R1.restName='" + baseRest + "' "
+    sql += " ORDER BY ST_Distance(R1.restLocation, R2.restLocation)
+
+
+
+DB : mySQL + python (+ PHP), 퀀드대학 + [실습과 함께하는! 데이터베이스 MySQL편]
+웹게시 : Streamlit > PHP
+퀀트 : 퀀트 대학 (data 추출 전 우선 공유자료 활용) - 우선 즉실행 활용 부터 → '23.5 데이터 update
+MySQL data 퀀트 종목 추출 프로세스 확립 / 데이터 update 주기 확인 필요 
+
+https://platform.samsungcic.com
+
+■ 헨리의 퀀트 대학
+https://github.com/hyunyulhenry/quant_py
+
+seaborn csv file
+https://github.com/mwaskom/seaborn-data/blob/master/penguins.csv
+
+■ [MySQL 8.0] 동영상 강좌의 유튜브 링크
+저자 개인 채널 (★완료)
+https://www.youtube.com/playlist?list=PLqTUMsvO70nk8WfCyU-IPmc85390CaSqM
+
+한빛미디어 채널 (★완료)
+https://www.youtube.com/playlist?list=PLVsNizTWUw7Hox7NMhenT-bulldCp9HP9
+
+한빛미디어 이것이 데이터베이스다 정보자료실
+https://cafe.naver.com/thisismysql
+
+
+■ 헨리의 퀀트 대학
+sql.ipynb
+
+▣ SQL 기초
+데이터베이스는 각각의 테이블로 이루어져 있으며, 테이블의 구성요소는 크게 다음과 같다. 
+
+- 열(컬럼): 테이블에 보관하는 데이터 항목이다.
+- 행(레코드): 데이터 한 건에 해당하며, RDBMS는 반드시 행 단위로 데이터를 읽고 쓴다.
+- 셀(값): 행과 열이 교차하는 하나의 값이며, 하나의 셀 안에는 하나의 데이터만 넣을 수 있다.
+
+```{figure} image/sql/table.png
+---
+name: table
+---
+테이블의 구성요소
+
+# 데이터베이스와 테이블 만들기
+* 데이터베이스(스키마) 생성
+create database shop;
+
+* 사용 데이터베이스 지정
+use shop;
+
+* 테이블 생성 - not null
+
+모든 열에 데이터 형식 지정 필요 (CHAR, BINARY, TEXT, VARCHAR, BLOB, 숫자형 데이터 타입이 있음)
+각종 제약 설정 - null : 데이터가 없음 의미, not null : 반드시 데이터가 존재해야 한다는 의미
+기본 키(primary key) 지정 : 여기서는 goods_id
+
+데이터베이스나 테이블, 열 이름으로 사용할 수 있는 문자
+- 영문자(간혹 한글이 되기는 하나 추천하지 않음)
+- 숫자
+- 언더바(_)
+
+### 테이블 정의 변경하기
+
+테이블에 열을 추가로 만들거나 삭제를 해야하는 등 테이블의 정의를 변경해야 하는 경우 `ALTER TABLE` 문을 사용하면 된다. 먼저 열을 추가하는 쿼리는 다음과 같다.
+create table <테이블명>
+(
+<열 이름 1> <데이터 형태> <이 열의 제약>,
+<열 이름 2> <데이터 형태> <이 열의 제약>,
+<열 이름 3> <데이터 형태> <이 열의 제약>,
+….
+<테이블의 제약 1>, <테이블의 제약 2>, …. 
+);
+
+create table goods
+(
+goods_id char(4) not null,
+goods_name varchar(100) not null,
+goods_classify varchar(32) not null,
+sell_price integer,
+buy_price integer,
+register_date date,
+primary key (goods_id)
+);
+
+# 테이블 정의 변경 - 열 추가, 삭제 alter table <테이블명> add/drop column <열 이름> <열 정의>;
+alter table goods add column goods_name_eng varchar(100);
+alter table goods drop column goods_name_eng;
+
+# 테이블에 데이터 등록 insert into <테이블명> values (값);
+insert into goods values ('0001', '티셔츠', '의류', 1000, 500, '2020-09-20');
+insert into goods values ('0002', '펀칭기', '사무용품', 500, 320, '2020-09-11');
+insert into goods values ('0003', '와이셔츠', '의류', 4000, 2800, NULL);
+insert into goods values ('0004', '식칼', '주방용품', 3000, 2800, '2020-09-20');
+insert into goods values ('0005', '압력솥', '주방용품', 6800, 5000, '2020-01-15');
+insert into goods values ('0006', '포크', '주방용품', 500, NULL, '2020-09-20');
+insert into goods values ('0007', '도마', '주방용품', 880, 790, '2020-04-28');
+insert into goods values ('0008', '볼펜', '사무용품', 100, NULL, '2020-11-11');
+
+# select - 열 선택 select <열 이름 1> , <열 이름 2>, … <열 이름 n> from <테이블명>;
+* 선택한 열만
+select goods_id, goods_name, buy_price
+from goods;
+
+* 모든 열
+select * from goods;
+
+* 선택 열, 별명 부여
+select goods_id as id,
+	goods_name as name,
+	buy_price as price
+from goods;
+
+* 열에 별명 부여
+select '상품' as category,
+    38 as num,
+    '2022-01-01' as date,
+    goods_id,
+    goods_name,
+    sell_price, buy_price, sell_price - buy_price as profit
+from goods;
+
+# 중복 제거
+select distinct goods_classify
+from goods;
+
+# where : 원하는 행 선택
+select goods_name, goods_classify
+from goods
+where goods_classify = '의류';
+
+# 산술연산자
+select *, sell_price - buy_price as profit
+from goods
+where sell_price - buy_price >= 500;
+
+# 비교연산자
+select goods_name, goods_classify, sell_price
+from goods
+where sell_price >= 1000;
+
+select goods_name, goods_classify, register_date
+from goods
+where register_date < '2020-09-27';
+
+# 논리 연산자
+* and
+select goods_name, goods_classify, sell_price
+from goods
+where goods_classify = '주방용품'
+and sell_price >= 3000;
+
+* or
+select goods_name, goods_classify, sell_price
+from goods
+where goods_classify = '주방용품'
+or sell_price >= 3000;
+
+# 집약 함수 - 여러 record를 하나로 집약시키는 기능
+* 행 숫자 계산 (null 포함)
+select count(*)
+from goods;
+
+* 행 숫자 계산 (null 제외, 특정열)
+select count(buy_price)
+from goods;
+
+* 합계 계산
+select sum(sell_price), sum(buy_price)
+from goods;
+
+*  산출평균 계산
+select avg(sell_price)
+from goods;
+
+* 중복값 제외 후 집약함수 사용
+select count(distinct goods_classify) 
+from goods;
+
+# 그룹화와 정렬
+* 상품분류별 데이터 수
+select goods_classify, count(*)
+from goods
+group by goods_classify;
+
+* 그룹별 계산
+select buy_price, count(*)
+from goods
+group by buy_price;
+
+* 조건 검색 후 그룹별 계산
+select buy_price, count(*)
+from goods
+where goods_classify = '의류'
+group by buy_price;
+
+* gropu by 결과에 조건을 지정 - having
+select goods_classify, avg(sell_price)
+from goods
+group by goods_classify
+having avg(sell_price) >= 2500;
+
+* 정렬
+select *
+from goods
+order by sell_price; (default 오름차순)
+
+select *
+from goods
+order by sell_price desc;
+
+# 뷰와 서브쿼리
+* 뷰
+create view GoodSum (goods_classify, cnt_goods)
+as
+select goods_classify, count(*)
+from goods
+group by goods_classify;
+
+select *
+from GoodSum;
+
+drop view GoodSum;
+
+* 서브쿼리
+select goods_classify, cnt_goods
+from (
+ select goods_classify, count(*) as cnt_goods
+ from goods
+ group by goods_classify
+) as GoodsSum;
+
+
+
+
+
+
+
+MySQL 
+MySQL Server 8.0.34 / MySQL Router 8.0.34 / Samples and Examples 8.0.34
+Port : 3306
+
+show databases; DB들의 리스트를 표시하라
+use world; WORLD DB를 사용한다
+show tables; WORLD DB의 테이블리스트를 표시하라
+desc city; city 테이블의 구조를 표시달라
+select * from city; city테이블의 내용을 표시하라
+
+C create     insert
+R retrieve   select
+U update   update
+D deleate   date
+
+▶ select distinct 컬럼명1, 컬럼명2, … from 테이블명 where 조건절
+select CountryCode from city where CountryCode=‘KOR’;
+select distinct CountryCode from city where CountryCode=‘KOR’;
+
+▶ 논리연산자 (AND, OR, NOT)
+select * from 테이블명 where (not) 조건 1 and/or (not) 조건 2 …
+
+select * from city where CountryCode=‘KOR’ and Population >= 1000000;
+select * from city where CountryCode=‘KOR’ or CountryCode=‘CHN’ or CountryCode=‘JPN’;
+select * from city where CountryCode !=‘KOR’ and Population >= 1000000;
+
+▶ 논리연산자 (IN, BETWEEN)
+select * from city where CountryCode in (‘KOR’, ‘CHN’, ‘JPN’);
+select * from city where CountryCode=‘KOR’ or CountryCode=‘CHN’ or CountryCode=‘JPN’;
+select * from city where CountryCode = ‘KOR’ and (Population between 1000000 and 5000000);
+select * from city where CountryCode = ‘KOR’ and (Population >= 1000000 and Population <= 5000000);
+
+▶ 결과정렬(ORDER BY)
+: SELECT문의 결과값을 특정한 컬럼을 기준으로 오름차순/내림차순으로 정렬해서 표시
+: 기본값은 오름차순 정렬임/여러 개의 컬럼을 나열하면 순서대로 정렬
+select * from city where CountryCode='KOR' oder by Population desc;
+select CountryCode, Population from city order by CountryCode, Population desc (asc : default)
+
+■ 3차시 SQL, CRUD
+1. DML (Data Manipulation Language) - 테이블의 데이터를 조작하는 기능, CRUD
+   : insert, delete, update
+2. DDL (Data Definition Language) - DB, 테이블의 스키마를 정의, 수정하는 기능, 테이블 생성, 컬럼 추가, 타입 변경, 각종 제약조건 지정, 수정 등
+   : create, drop, alter
+3. DCL (Data Control Language) - DB나 테이블의 접근권한이나 CRUD 권한을 정의하는 기증, 특정 사용자에게 테이블의 조회권한 허가/금지 등
+   : grant, revoke
+
+▶ CRUD 실습
+select * from city;
+
+
+
+
+
+■ 4차시 쿼리결과 중복제거, 논리연산자, 결과정렬
+
+
+■ 5차시 JOIN, 별명(ALIAS), 뷰(View)
+select count(*) from city inner join country on city.CountryCode = country.Code;
+select count(*) from city left join country on city.CountryCode = country.Code;
+select count(*) from city right join country on city.CountryCode = country.Code;
+select country.Name from city right join country on city.CountryCode = country.Code where city.CountryCode is NULL ;
+
+>as table column명 반영
+select country.Name as Dosi from city right join country on city.CountryCode = country.Code where city.CountryCode is NULL ;
+
+> view
+create view sampleView as select country.Name as Dosi from city right join country on city.CountryCode = country.Code where city.CountryCode is NULL ;
+select count(*) from sampleView;
+drop view sampleView;
+
+■ 6차시 SELECT INTO, INSERT INTO SELECT, CASE, CASE WHEN AND
+create table city_new select * from city where CountryCode='KOR';
+desc city;
+desc city_new;
+select * from city_new;
+insert into city_new select * from city where CountryCode='CHN';
+select count(*) from city_new;
+insert into city_new select * from city where CountryCode='JPN';
+select count(*) from city_new;
+select distinct CountryCode from city_new; (검증)
+
+select Name, Population from city limit 10;
+select Name, length(Name), Population from city limit 10;
+3자리 이하 그대로, 초과 3자리만 표시
+select upper(mid(Name,1,3)), length(Name), Population from city limit 10;
+select case when length(Name) > 3 then upper(mid(Name,1,3))
+    ->             when length(Name) <= 3 then upper(Name)
+    ->             end, Population from city limit 10;
+
+select count(Name) from city where length(Name) <= 3;
+select Name from city where length(Name) <= 3;
+
+select Name, Population from city order by Population desc limit 20;
+select Name, Population, case when Population <= 100000 then 'level0' when Population <= 1000000 then 'level1' when Population <= 10000000 then 'level2' Population > 10000000 then 'level3' end from city order by Population desc limit 20;
+(\G 내용만 출력)
+
+■ 7차시 LIKE 검색, NULL값, GROUP BY/HAVING
+select count(*) from city where CountryCode like 'K%';
+select count(*) from city where CountryCode like '%K';
+select count(*) from city where CountryCode like '%K%';
+
+select count(*) from city where CountryCode like 'K__';
+select count(*) from city where CountryCode like 'K_';
+select count(*) from city where CountryCode like '___';
+
+select count(Name) from country where LifeExpectancy is null;
+select count(Name) from country where LifeExpectancy is not null;
+select avg(ifnull(LifeExpectancy, 0)) from country;
+
+select CountryCode, count(CountryCode) from city group by CountryCode;
+select CountryCode, count(CountryCode) from city group by CountryCode having CountryCode='KOR';
+select CountryCode, count(CountryCode) from city group by CountryCode having count(CountryCode) > 70;
+
+
+select avg(LifeExpectancy) from country;
+
+
+■ 검색성능 개선을 위한 INDEX
+
+show databases;
+use world;
+show tables;
+create table BusinessCard (Name varchar(255), Address varchar(255), Telephone varchar(255));
+insert into BusinessCard values ('Bob', 'Seoul', '123-4567');
+insert into BusinessCard values ('Sam', 'Busan', '321-4567');
+select * from BusinessCard;
+
+show create table BusinessCard;
+
+create index BusinessCard_Name_index on BusinessCard(Name);
+show create table BusinessCard;
+
+alter table BusinessCard drop index BusinessCard_Name_index;
+show create table BusinessCard;
+
+https://launchpad.net/test-db
+
+
+show databases;
+use employees;
+show tables;
+desc employees;
+select * from employees limit 10;
+select count(*) from employees;
+
+select * from employees where last_name='Matzke' and first_name='Jenwei';
+create index emplyees_index on employees(last_name, first_name);
+select * from employees where last_name='Matzke' and first_name='Jenwei';
+
+alter table employees drop index employees_index;
+select * from employees where last_name='Matzke' and first_name='Jenwei';
+
+■ DB 성능 확장 및 안정화 고급기술 2 - 파티셔닝/샤딩, 데이터베이스 복제
+create table BusinessCard (Name varchar(256), Address varchar(255), Telephone varchar(255), CreationTime Date) Partition By Range (YEAR(CreationTime)) (partition p0 values less than (2013), partition p1 values less than MAXVALUE);
+
+show create table BusinessCard\G
+
+insert into BusinessCard values ('Bob', 'Seoul', '123-4567', '2010-01-01');
+insert into BusinessCard values ('Sam', 'Busan', '321-4567', '2015-01-01');
+select * from BusinessCard;
+select * from BusinessCard where CreationTime > '2014-01-01';
+update BusinessCard set CreationTime = '2016-01-01' where Name='Bob';
+select * from BusinessCard;
+
+1)  직원(Employee) 테이블에 대한 정의를 DDL로 표현하시오.
+- 모든 테이블들은  자동증가(AUTO_INCREMENT), 숫자 타입(INT) 'ID'를 기본키(PK)로 해야한다. 
+- 직원테이블은 이름(Name),소속부서(Department), 주소(Address), 전화번호(Telephone), 이메일(Email), 직원번호(EmployeeNo) 속성을 가진다.
+- 숫자 컬럼은 INT, 문자 컬럼은 VARCHAR(255) 타입을 가진다.
+
+create table Employee 
+(
+ID INT AUTO_INCREMENT, 
+Name VARCHAR(255), 
+Department VARCHAR(255), 
+Address VARCHAR(255), 
+Telephone VARCHAR(255), 
+Email VARCHAR(255), 
+EmployeeNo VARCHAR(255),
+PRIMARY KEY (ID)
+);
+
+2) 직원(Employee)테이블의 이메일(Email)컬럼에 인덱스를 추가/삭제하시오.(인덱스명 employee_email_idx, CREATE INDEX를 사용할 것) 
+create index employee_email_idx on Employee(Email);
+alter table Employee drop index employee_email_idx;
+
+3) Partitioned_Employee 테이블을 ID 컬럼을 기반으로 파티션을 생성하시오. 
+(ID가 1000미만은 p1000, 나머지는 pmax라는 파티션이름을 준다.)
+(직원 테이블과 스키마는 동일하다. CREATE TABLE을 사용해서 생성할 것)
+
+create table Partitioned_Employee (
+ID INT AUTO_INCREMENT, 
+Name VARCHAR(255), 
+Department VARCHAR(255), 
+Address VARCHAR(255), 
+Telephone VARCHAR(255), 
+Email VARCHAR(255), 
+EmployeeNo VARCHAR(255),
+PRIMARY KEY (ID)
+) Partition By Range (ID) (partition p1000 values less than (1000), partition pmax values less than MAXVALUE);
+
+show create table BusinessCard\G
+

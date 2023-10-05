@@ -1,0 +1,389 @@
+df.to_csv('mycsv.csv', header=False,  index=False)
+[주요 option]
+mode='a'
+encoding='utf-8' / 'cp949'
+sep='\t' / '|'
+skiprows=15
+
+df = pd.read_csv('data.csv', sep=',', encoding='cp949', skiprows=15)
+
+pd.read_csv('data1.csv', index_col=1)
+1번째 column을 index로 사용
+
+■ 내 손 데이터 분석 파이선 pandas 기초
+https://github.com/CSSEGISandData/COVID-19
+
+- 강의준비 : 프로그램 설치 및 사용법
+   01차시 강의 및 학습 방법 소개
+   02차시 아나콘다와 쥬피터노트북 소개
+   03차시 파이썬 아나콘다 설치 방법 (맥/윈도우 환경)
+   04차시 쥬피터노트북 사용법 - mark down
+   05차시 꼭 알아야 하는 파이썬 기본 문법 정리 - python core_summary
+   06차시 파이썬 라이브러리 설치 및 사용법 - library_2020
+
+- Pandas를 활용한 데이터 전처리와 분석
+   07차시 pandas 라이브러리 이해하기
+   08차시 데이터 분석의 첫출발: 탐색적 데이터 분석(EDA) 이해
+   09차시 pandas로 탐색적 데이터 분석 해보기 1
+   10차시 pandas로 탐색적 데이터 분석 해보기 2
+   11차시 pandas 라이브러리로 데이터 다루기 - 기본 사용법 1
+   12차시 pandas 라이브러리로 데이터 다루기 - 기본 사용법 2
+   13차시 데이터프레임 연결/병합하기1
+   14차시 데이터프레임 연결/병합하기2
+- 내 손으로 만들어보는 코로나 현황판
+   15~19차시 실제 현업 예제로 쌩데이터부터 시각화까지 맛보기 1~5
+   20차시 전처리 데이터로 그래프 만들기
+   21차시 최종 시각화까지 완성하기
+
+
+  □ python_core_summary
+    ▶ 문자열 특수 기능
+     1) 인덱스 (index)
+       - 인덱스는 특정 데이터를 가리키는 번호를 나타냄
+         string = "python"
+         len(string)
+
+        |p|y|t|h|o|n|
+        |:--:|:--:|:--:|:--:|:--:|:--:|
+        |0|1|2|3|4|5|
+        |-6|-5|-4|-3|-2|-1|
+
+       string[0]
+       string[-1]
+
+    2) 슬라이싱 (slicing)
+       string[3:5]
+
+    3) 문자열 특수 함수
+       : 특이하게 변수.함수 형태를 가짐
+       func = "python is easy programming language"
+       func.count('p')
+       func.find('p')
+       python_is_easy = "python is easy"
+       python_is_easy.replace("python", "golang")
+
+       some_string = "   computer     "
+       some_string.strip()
+       some_string = ",,,DaveLee..."
+       some_string.strip(",")
+       some_string.strip(".")
+ 
+    4) 다양한 출력 
+       print("I have a {}, I have an {}.".format("pen", "apple"))
+
+      print("I have a %s, I have an %s." % ("pen","apple"))
+      %s - string, %c - character, %d - int, %f - float
+
+   ▶ 데이터 구조 
+     1) List
+         a = [' ', ' ', ' '] 
+     2) Tuple
+         a = (' ', ' ', ' ') 
+         삭제나 추가 불가
+         tuple끼리 더하거나 반복 가능
+            tuple1 = (1, 2, 3, 4)
+            tuple2 = (5, 6)
+            print(tuple1 + tuple2)
+            print(tuple1 * 3)
+
+         swap (x,y) = (y,x)
+         함수에서 하나 이상의 값 반환 가능
+
+         def quot_and_rem(x,y):
+              quot = x // y
+              rem = x % y
+              return (quot, rem)
+    
+         (quot, rem) = quot_and_rem(3,10)
+
+         List <-> Tuple 변환
+         list((1,2))
+         tuple([1,2])
+
+      3) dictionary : key / value
+         - 요소 삭제 : del dict['math']
+         - dict['math'], dict.keys(), dict.values(), dict.items()
+
+      4) set
+         - ppap = {'pen', 'apple', 'pineapple', 'pen'} 
+           'apple' in ppap
+         - &, |, -, ^
+         - 변수명.add() - 하나의 data
+         - 변수명.update() - 여러 data 추가, list 형태
+         - 변수명,remove() - 특정 data 삭제
+         (※ 중복 배제 list(set()) - error)
+
+  □ library_2020
+     import statistics                   # 함수를 사용하기 위해 해당 라이브러리명.함수명으로 써야 함
+     statistics.mean(data)
+
+     from statistics import mean   # 라이브러리에서 일부 함수만 불러와서 사용
+     from statistics import *         # ! 해당 라이브러리에 있는 모든 함수를 라이브러리명 없이 쓸 수 있음
+
+     import statistics as s     # 라이브러리명을 줄이고 싶을 때 (다른 이름으로 변경할 때)
+     s.mean(data)
+
+ □ pandas_data_processing
+    1. Series 로 feature를 보다 상세하게 탐색하기
+       -  데이터프레임에서 Series 추출하기
+          : 하나의 feature(column)만 선택하면 됨
+            countries = doc['Country_Region']
+          : size : 사이즈 반환, count() : 데이터 없는 경우를 뺀 사이즈 반환
+            unique() : 유일한 값만 반환, value_counts() : 데이터 없는 경우 제외, 각 값의 개수 반환
+    2. 필요한 컬럼만 선택하기
+       - 여러 컬럼 선택 시 별도의 dataframe이 됨
+          covid_stat = doc[['Confirmed', 'Deaths', 'Recovered']]
+    3. 특정 조건에 맞는 row 검색하기
+        doc_us = doc[doc['Country_Region'] == 'US']
+    4. 없는 데이터(NaN) 처리하기
+       결측치 처리
+         - isnull() : 없는 데이터가 있는지 확인 (True or False)
+         - sum() : 없는 데이터가 있는 행의 갯수 확인 
+         - 통상 isnull().sum() 으로 사용
+         - dropna() : 결측치를 가진 행을 모두 삭제
+            DataFrame.dropna(axis=0, how='any', thresh=None, subset=None, inplace=False)
+         # 특정 컬럼값이 없는 데이터만 삭제하기
+            - subset으로 해당 컬럼을 지정해줌
+              doc = doc.dropna(subset=['Confirmed'])
+         # 없는 데이터(NaN)을 특정값으로 일괄 변경하기
+            - fillna(특정값) : 특정값으로 결측치를 대체
+         # 없는 데이터(NaN)중 특정 컬럼에 대해 특정 값으로 일괄 변경하기
+            - 별도 사전 데이터를 생성, 없는 데이터를 변경할 컬럼명만 키로 만들고, 변경할 특정 값을 키값으로 넣고, fillna() 함수에 적용해주면 됨
+            doc = pd.read_csv(PATH + "01-22-2020.csv", encoding='utf-8-sig')
+            nan_data = {'Deaths': 0, 'Recovered':0}
+            doc = doc.fillna(nan_data)
+            doc.head()
+            doc.colums 컬럼명 확인, 수정 가능
+
+   5. 특정 키값을 기준으로 데이터 합치기
+     - groupby() : SQL 구문의 group by 와 동일, 특정 컬럼을 기준으로 그룹
+     - sum() : 그룹으로 되어 있는 데이터를 합치기
+     - groupby 에 의해서, index가 특정 컬럼의 값으로 변경됨
+
+   6. 컬럼 타입 변경하기
+     - pandas에서 데이터 타입은 dtype 으로 불리우며, 주요 데이터 타입은 다음과 같음
+     - object 는 파이썬의 str 또는 혼용 데이터 타입 (문자열)
+     - int64 는 파이썬의 int (정수)
+     - float64 는 파이썬의 float (부동소숫점)
+     - bool 는 파이썬의 bool (True 또는 False 값을 가지는 boolean)
+       doc.info()
+     - astype({컬럼명: 변경할타입}) : 특정 컬럼의 타입을 변경
+     - 변경할 데이터에 없는 데이터(NaN)이 있을 경우, 에러가 날 수 있음
+
+   7. 데이터프레임 컬럼명 변경하기
+     - columns 로 컬럼명을 변경할 수 있음
+
+   8. 데이터프레임에서 중복 행 확인/제거하기
+     - duplicated() : 중복 행 확인하기
+     - drop_ducplicates() : 중복 행 삭제중복값
+     - 특정 컬럼을 기준으로 중복 행 제거하기
+     - subset=특정컬럼
+     - 중복된 경우, 처음과 마지막 행 중 어느 행을 남길 것인지 결정하기 
+     - 처음: keep='first' (디폴트)
+     - 마지막: keep='last'
+     - 모두 제거 : keep='False'
+
+ 주요 데이터 시각화 라이브러리
+        - matplotlib: 파이썬에서 가장 기본적으로 사용하는 자료를 그래프로 보여주는 시각화 라이브러리
+        - 가장 좋기 때문에, 많이 사용된 것이 아니라, 이전부터 사용해왔기 때문에 사용된다고 하는 편이 맞음
+        - seaborn: matplotlib을 기반으로 다양한 통계 차트 및 색상 테마를 추가한 라이브러리
+        - matplotlib 라이브러리로만은 이쁘지 않았고, 다양한 차트에 대한 요구가 많아서 개발된 라이브러리
+
+      # 화면에 표시될 그래프 사이즈 조정
+      sns.heatmap(data = doc.corr(), annot=True, fmt = '.2f', linewidths=0.5, cmap='Blues')
+        - data=테이블형: 데이터셋(데이터프레임)
+        - annot=True: 박스 안에 값 표시
+        - fmt='0.2f': 박스 안에 표시될 값의 표시 형식 설정 (0.2f 는 소숫점 두자릿수를 의미함)
+        - linewidths=0.5: 박스와 박스 사이의 간격 설정
+        - cmap='Blues': 색상 선택 (https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html)
+
+     %matplotlib inline
+     import matplotlib.pyplot as plt 
+     import seaborn as sns
+
+     plt.figure(figsize=(5,5))
+     sns.heatmap(data = doc.corr(), annot=True, fmt = '.2f', linewidths=0.5, cmap='Blues')
+
+
+□ 탐색적 데이터 분석 (EDA : Exploratory Data Analysis) 과정
+     https://github.com/CSSEGISandData/COVID-19
+
+     doc = pd.read_csv("파일명", encoding='utf-8-sig', quotechar=',')
+     doc = pd.read_csv("파일명", encoding='utf-8-sig', error_bad_lines=False)
+
+     pd.read_excel(파일명, sheet_name=시트명)
+
+     import pandas as pd
+     doc = pd.read_csv("COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-01-2020.csv", encoding='utf-8-sig')
+
+     탐색적 데이터 분석: 1. 데이터의 출처와 주제에 대해 이해
+
+     탐색적 데이터 분석: 2. 데이터의 크기 확인
+     1. 데이터를 pandas로 읽은 후, 가장 먼저 하는 일
+        - 데이터 일부 확인하기
+        - head(): 처음 5개(디폴트)의 데이터 확인하기
+        - head(n=10): 처음 10개(조정 가능)의 데이터 확인하기 
+        - tail(): 마지막 5개의 데이터 확인하기
+        - tail(n=10): 마지막 10개(조정 가능)의 데이터 확인하기 
+
+     2. 보다 다양한 데이터 정보 확인하기
+        - shape: 데이터의 row, column 사이즈 확인
+        - info(): column별 데이터 타입과 실제 데이터가 있는 사이즈 확인
+        - raw data는 일부 데이터가 없는 경우가 많기 때문에, 실제 데이터의 사이즈 확인이 필요함
+
+    탐색적 데이터 분석: 3. 데이터 구성 요소(feature)의 속성(특징) 확인
+    1. 각 column 이해하기
+        - raw data에는 다양한 column 이 있는 경우가 많고, 이 중에서 내가 사용할 column 에 대해서는 확실히 이해하고 있어야 함
+        - Country_Region: 국가, Lat/Long: 경도, Confirmed: 확진, Deaths: 사망, Recovered: 회복, Active: 확진 중인 사람(사망자/회복자 제외)
+          doc.columns
+
+    2. 속성이 숫자라면, 평균, 표준편차, 4분위 수, 최소/최대갑 확인하기
+        - describe(): 숫자 데이터의 기본 통계치를 한번에 확인할 수 있음
+          doc.describe()
+
+    3. 속성간 상관관계 이해하기
+        - corr(method=상관계수): 각 속성간 상관관계 확인하기 (피어슨 상관계수가 디폴트임)
+        - 피어슨 상관계수는 일반적으로 1에 가까우면 두 feature 간의 상관 관계가 높고, -1에 가까우면 관계가 없다고 해석됨
+           doc.corr()
+ 
+ □ pandas_merge_concat : pandas 라이브러리로 데이터프레임 합치기
+   1. concat() :두 데이터프레임 연결하기
+      concat() : 두 데이터프레임을 연결해서 하나의 데이터프레임으로 만들 수 있음
+                    두 데이터프레임을 위/아래 또는 왼쪽/오른쪽으로 연결하기만 함
+        pd.con cat([데이터프레임1, 데이터프레임2])
+        axis: 0 이면(디폴트) 위에서 아래로 합치고, 1 이면 왼쪽과 오른쪽으로 합침
+
+   2. merge(): 두 데이터프레임을 합치기
+      merge(데이터프레임1, 데이터프레임2) : 두 데이터프레임에 동일한 이름을 가진 컬럼을 기준으로 두 데이터프레임을 합침 
+      merge(데이터프레임1, 데이터프레임2, on=기준컬럼명) : 기준 컬럼을 명시할 수도 있음
+
+      merge() 를 통해 어떻게 두 데이터프레임을 결함시킬 것인가에 대해 보다 상세한 기능을 제공함
+      merge(데이터프레임1, 데이터프레임2, how=결합방법) 
+      ▶ 결합방법
+        1) inner : 내부 조인 - SQL의 INNER JOIN 과 동일
+        2) outer : 완전 외부 조인 - SQL의 OUTER JOIN 과 동일
+        3) left : 왼쪽 우선 외부 조인 - SQL의 LEFT OUTER JOIN 과 동일
+        4) right : 오른쪽 우선 외부 조인 - SQL의 RIGHT OUTER JOIN 과 동일
+        참고: merge() 함수는 SQL의 JOIN 기능과 동일함
+               - SQL JOIN: 두 개 이상의 테이블로부터 필요한 데이터를 연결해 하나의 포괄적인 구조로 결합시키는 연산
+
+      1. inner : 내부 조인 - SQL의 INNER JOIN 과 동일 (디폴트)
+        [동작 방식]
+        1) on의 컬럼값이 두 데이터프레임에서 동일한 행 찾기
+        2) 각 동일한 행의 컬럼/컬럼값만 가져오기
+
+      2. outer : 완전 외부 조인 - SQL의 OUTER JOIN 과 동일
+         1) on의 컬럼값이 두 데이터프레임에서 동일한 행 찾기
+         2) 각 동일한 행의 컬럼/컬럼값 가져와 붙이기
+         3) 각 데이터프레임에서 on의 컬럼값이 다른 나머지 행을 찾기
+         4) 각 나머지 행의 컬럼/컬럼값을 가져와 별도 행으로 붙이기
+           - 두 데이터프레임 각각에만 있는 컬럼이어서, 컬럼값이 없을 경우 데이터 없음(NaN)으로 표기하기
+
+     3. left : 왼쪽 우선 외부 조인 - SQL의 LEFT OUTER JOIN 과 동일
+        1) 왼쪽 데이터프레임의 행을 모두 가져오기
+        2) 왼쪽 데이터프레임의 행에 있는 on의 컬럼값이 동일한 오른쪽 데이터프레임의 행만 컬럼과 함께 가져와 붙이기
+        3) 오른쪽 데이터프레임에 없는 on의 컬럼값을 가진 왼쪽 데이터프레임의 오른쪽 데이터프레임 컬럼들에는 데이터 없음(NaN)으로 표기하기
+
+     4. right : 오른쪽 우선 외부 조인 - SQL의 RIGHT OUTER JOIN 과 동일
+        1) 오른쪽 데이터프레임의 행을 모두 가져오기
+        2) 오른쪽 데이터프레임의 행에 있는 on의 컬럼값이 동일한 왼쪽 데이터프레임의 행만 컬럼과 함께 가져와 붙이기
+        3) 왼쪽 데이터프레임에 없는 on의 컬럼값을 가진 오른쪽 데이터프레임의 왼쪽 데이터프레임 컬럼들에는 데이터 없음(NaN)으로 표기하기
+
+     ▶ 컬럼이 아닌 인덱스를 기준 컬럼으로 사용하기
+      - merge(데이터프레임1, 데이터프레임2, left_index=True, right_index=True) : 기준 컬럼을 명시할 수도 있음
+
+ □ pandas_real_data_processing.ipynb
+import pandas as pd
+import json, os 
+
+with open('COVID-19-master/csse_covid_19_data/country_convert.json', 'r', encoding='utf-8-sig') as json_file:
+    json_data = json.load(json_file)
+
+def country_name_convert(row):
+    if row['Country_Region'] in json_data:
+        return json_data[row['Country_Region']]
+    return row['Country_Region']
+
+def create_dateframe(filename):
+    doc = pd.read_csv(PATH + filename, encoding='utf-8-sig')  # 1. csv 파일 읽기
+    try:
+        doc = doc[['Country_Region', 'Confirmed']]  # 2. 특정 컬럼만 선택해서 데이터프레임 만들기
+    except:
+        doc = doc[['Country/Region', 'Confirmed']]  # 2. 특정 컬럼만 선택해서 데이터프레임 만들기
+        doc.columns = ['Country_Region', 'Confirmed']
+    doc = doc.dropna(subset=['Confirmed'])     # 3. 특정 컬럼에 없는 데이터 삭제하기
+    doc['Country_Region'] = doc.apply(country_name_convert, axis=1)   # 4. 'Country_Region'의 국가명을 여러 파일에 일관되게 변경하기
+    doc = doc.astype({'Confirmed': 'int64'})   # 5. 특정 컬럼의 데이터 타입 변경하기
+    doc = doc.groupby('Country_Region').sum()  # 6. 특정 컬럼으로 중복된 데이터를 합치기
+
+    # 7. 파일명을 기반으로 날짜 문자열 변환하고, 'Confirmed' 컬럼명 변경하기
+    date_column = filename.split(".")[0].lstrip('0').replace('-', '/') 
+    doc.columns = [date_column]
+    return doc
+
+
+import os
+
+def generate_dateframe_by_path(PATH):
+    file_list, csv_list = os.listdir(PATH), list()
+    first_doc = True
+    for file in file_list:
+        if file.split(".")[-1] == 'csv':
+            csv_list.append(file)
+    csv_list.sort()
+    
+    for file in csv_list:
+        doc = create_dateframe(file)
+        if first_doc:
+            final_doc, first_doc = doc, False
+        else:
+            final_doc = pd.merge(final_doc, doc, how='outer', left_index=True, right_index=True)
+
+    final_doc = final_doc.fillna(0)
+    return final_doc
+
+
+PATH = 'COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/'
+doc = generate_dateframe_by_path(PATH)
+doc
+
+doc.to_csv("COVID-19-master/final_df.csv")
+
+
+doc2 = pd.read_csv(PATH+'final_df.csv', encoding='utf-8-sig', index_col='Country_Region')
+doc2
+
+def create_flag_link(row):
+    flag_link = 'https://www.countryflags.io/' + row + '/flat/64.png'
+    return flag_link
+
+
+PATH = 'COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/'
+df_confirmed = generate_dateframe_by_path(PATH)
+df_confirmed = df_confirmed.astype('int64')
+
+country_info = pd.read_csv("COVID-19-master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv", encoding='utf-8-sig', keep_default_na=False, na_values='')
+country_info = country_info[['iso2', 'Country_Region']]
+country_info = country_info.drop_duplicates(subset='Country_Region', keep='last')
+
+※ 국가명과 iso2 매칭 테이블 읽기 (country_info)
+  - iso2 컬럼값으로 https://www.countryflags.io/ 에서 제공하는 국기 이미지 링크를 얻을 수 있음
+  - 다음 데이터는 결측치로 변환됨
+    : ‘’, ‘#N/A’, ‘#N/A N/A’, ‘#NA’, ‘-1.#IND’, ‘-1.#QNAN’, ‘-NaN’, ‘-nan’, ‘1.#IND’, ‘1.#QNAN’, ‘<NA>’, ‘N/A’, ‘NA’, ‘NULL’, ‘NaN’, ‘n/a’, ‘nan’, ‘null’
+  - Namibia 국가의 iso2 값이 NA 이므로 결측치 변환을 막기 위해 다음과 같은 옵션 설정
+    : keep_default_na=False : 디폴트 결측치 변환 데이터를 사용하지 않고, na_values로 지정한 데이터만 결측치로 변환
+    : na_values='' : 결측치로 변환할 값을 지정
+    : 미적용 시 ISO2 'NA' → 'NAN'
+
+doc_final_country = pd.merge(df_confirmed, country_info, how='left', on='Country_Region')
+doc_final_country = doc_final_country.dropna(subset=['iso2'])
+doc_final_country['iso2'] = doc_final_country['iso2'].apply(create_flag_link)
+
+cols = doc_final_country.columns.tolist()            # column명 list 추출
+cols.remove('iso2')                                          # iso2 위치 변경 
+cols.insert(1, 'iso2')
+doc_final_country = doc_final_country[cols]        # column 순서 변경
+cols[1] = 'Country_Flag'
+doc_final_country.columns = cols                      # column 이름 변경
+
+doc_final_country.to_csv("COVID-19-master/final_covid_data_for_graph.csv")
